@@ -53,6 +53,19 @@ activities = {
         "max_participants": 22,
         "participants": ["ava@mergington.edu", "isabella@mergington.edu"]
     },
+    # Added sports activities
+    "Volleyball Club": {
+        "description": "Team volleyball training and friendly matches",
+        "schedule": "Thursdays, 5:00 PM - 6:30 PM",
+        "max_participants": 16,
+        "participants": ["sophie@mergington.edu", "lucas@mergington.edu"]
+    },
+    "Table Tennis Club": {
+        "description": "Table tennis practice and tournaments",
+        "schedule": "Tuesdays, 3:30 PM - 5:00 PM",
+        "max_participants": 12,
+        "participants": ["alex@mergington.edu", "emma@mergington.edu"]
+    },
 
     # Artistic activities
     "Art Club": {
@@ -67,6 +80,19 @@ activities = {
         "max_participants": 25,
         "participants": ["amelia@mergington.edu", "harper@mergington.edu"]
     },
+    # Added artistic activities
+    "Photography Club": {
+        "description": "Learn photography techniques and participate in photo walks",
+        "schedule": "Mondays, 4:00 PM - 5:30 PM",
+        "max_participants": 15,
+        "participants": ["leo@mergington.edu", "ella@mergington.edu"]
+    },
+    "Music Band": {
+        "description": "Practice and perform music in a school band",
+        "schedule": "Thursdays, 4:00 PM - 6:00 PM",
+        "max_participants": 12,
+        "participants": ["henry@mergington.edu", "grace@mergington.edu"]
+    },
 
     # Intellectual activities
     "Debate Team": {
@@ -80,6 +106,19 @@ activities = {
         "schedule": "Thursdays, 3:30 PM - 5:00 PM",
         "max_participants": 20,
         "participants": ["elijah@mergington.edu", "mia.s@mergington.edu"]
+    },
+    # Added intellectual activities
+    "Math Olympiad": {
+        "description": "Prepare for and participate in math competitions",
+        "schedule": "Wednesdays, 4:00 PM - 5:30 PM",
+        "max_participants": 14,
+        "participants": ["william@mergington.edu", "sofia@mergington.edu"]
+    },
+    "Robotics Club": {
+        "description": "Build and program robots for various challenges",
+        "schedule": "Fridays, 3:30 PM - 5:00 PM",
+        "max_participants": 10,
+        "participants": ["james@mergington.edu", "victoria@mergington.edu"]
     }
 }
 
@@ -104,10 +143,11 @@ def signup_for_activity(activity_name: str, email: str):
     # Get the specific activity
     activity = activities[activity_name]
 
-    # Validate student is not already signed up
+    # Validate student is not already signed up and capacity    
     if email in activity["participants"]:
         raise HTTPException(status_code=400, detail="Student already signed up for this activity")
-
+    if len(activity["participants"]) >= activity["max_participants"]:
+        raise HTTPException(status_code=400, detail="Activity is at full capacity")
     # Add student
     activity["participants"].append(email)
     return {"message": f"Signed up {email} for {activity_name}"}
